@@ -26,14 +26,15 @@ Instead of using a `.tfvars` for storing the different variable values, Github e
 
 2. Create the following secrets and add the corresponding types of values for each one. These are the ones set for this project:
 
-    * `AWS_REGION`: ex: "us-east-1"
-    * `EKS_CLUSTER_EC2_INSTANCE_TYPE`: ex: "m3.large"
-    * `EKS_VPC_SECURITY_GROUP_ID`: ex: "sg-062f05b98b1edfefaeasdadaedaed"
-    * `NODE_GROUP_AUTOSCALING_POLICY_ARN`: ex: "arn:aws:iam::23428842523567:policy/NameOFTHEPOLICY"
-    * `EKS_CLUSTER_NAME`: ex: "example-cluster"
-    * `VPC_CIDR_BLOCK`: ex: ["10.1.0.0/16"]
-    * `VPC_ID`: ex: "vpc-232fsr9fs9229frf"
-    * `VPC_PRIVATE_SUBNETS`: ex: ["subnet-22938423489239","subnet-232495956956"]
+    * `AWS_REGION`: ex: us-east-1
+    * `EKS_CLUSTER_EC2_INSTANCE_TYPE`: ex: m3.large
+    * `EKS_VPC_SECURITY_GROUP_ID`: ex: sg-062f05b98b1edfefaeasdadaedaed
+    * `NODE_GROUP_AUTOSCALING_POLICY_ARN`: ex: arn:aws:iam::23428842523567:policy/NameOFTHEPOLICY
+    * `EKS_CLUSTER_NAME`: ex: example-cluster
+    * `VPC_CIDR_BLOCK`: ex: 10.1.0.0/16
+    * `VPC_ID`: ex: vpc-232fsr9fs9229frf
+    * `VPC_PRIVATE_SUBNETS_1`: ex: subnet-22938423489239"
+    * `VPC_PRIVATE_SUBNETS_2`: ex: subnet-22938423489224"
 
 ## How to Deploy
 
