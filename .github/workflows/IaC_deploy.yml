@@ -26,6 +26,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Deserialize Array
+      id: deserialize_cidr_block_secret
+      run: echo "::set-output name=array::$(echo ${{ secrets.VPC_CIDR_BLOCK }} | jq -r '.[]')"
+      shell: bash
+
+    - name: Deserialize Array
+      id: deserialize_vpc_private_subnets_secret
+      run: echo "::set-output name=array::$(echo ${{ secrets.VPC_PRIVATE_SUBNETS }} | jq -r '.[]')"
+      shell: bash
+
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: HashiCorp - Setup Terraform
       uses: hashicorp/setup-terraform@v1.2.1
@@ -70,9 +80,9 @@ jobs:
           -var "eks_vpc_security_group_id=${{ secrets.EKS_VPC_SECURITY_GROUP_ID }}" \
           -var "node_group_autoscaling_policy_arn=${{ secrets.NODE_GROUP_AUTOSCALING_POLICY_ARN }}" \
           -var "eks_cluster_name=${{ secrets.EKS_CLUSTER_NAME }}" \
-          -var "vpc_cidr_block=[${{ secrets.VPC_CIDR_BLOCK }}]" \
+          -var "vpc_cidr_block=${{ steps.deserialize_cidr_block_secret.outputs.array }}" \
           -var "vpc_id=${{ secrets.VPC_ID }}" \
-          -var "vpc_private_subnets=[${{ secrets.VPC_PRIVATE_SUBNETS }}]"
+          -var "vpc_private_subnets=${{ steps.deserialize_vpc_private_subnets_secret.outputs.array }}"
   
     - name: Terraform Apply
       env:
@@ -88,6 +98,6 @@ jobs:
            -var "eks_vpc_security_group_id=${{ secrets.EKS_VPC_SECURITY_GROUP_ID }}" \
            -var "node_group_autoscaling_policy_arn=${{ secrets.NODE_GROUP_AUTOSCALING_POLICY_ARN }}" \
            -var "eks_cluster_name=${{ secrets.EKS_CLUSTER_NAME }}" \
-           -var "vpc_cidr_block=[${{ secrets.VPC_CIDR_BLOCK }}]" \
+           -var "vpc_cidr_block=${{ steps.deserialize_cidr_block_secret.outputs.array }}" \
            -var "vpc_id=${{ secrets.VPC_ID }}" \
-           -var "vpc_private_subnets=[${{ secrets.VPC_PRIVATE_SUBNETS }}]"
+           -var "vpc_private_subnets=${{ steps.deserialize_vpc_private_subnets_secret.outputs.array }}"
