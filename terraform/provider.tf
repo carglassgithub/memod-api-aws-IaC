@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket               = "kanvas-laravel-iaac"
+    bucket               = "memod-clusters-iaac-states"
     key                  = "states"
     workspace_key_prefix = "tf-states"
     region               = "us-east-1"
