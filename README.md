@@ -1,4 +1,6 @@
-# Memod API AWS EKS Cluster IaC
+# AWS EKS Cluster IaC
+
+Deploy a AWS EKS Cluster using Terraform in minutes.
 
 ## Setup
 
@@ -9,6 +11,12 @@
 * `AWS_ACCESS_KEY_ID`: AWS Account Access Key
 
 * `AWS_SECRET_ACCESS_KEY`: AWS Account Secret Key
+
+## Set you tf states bucket
+
+1. On AWS create a new bucket where the terraform states will be stored.
+
+2. Change the name of the bucket in the backend s3 configuration on the `provider.tf` file. On `bucket` replace the existing value with your own bucket name.
 
 ### Setting tfvars as Github Secrets
 
@@ -23,9 +31,9 @@ Instead of using a `.tfvars` for storing the different variable values, Github e
     * `EKS_VPC_SECURITY_GROUP_ID`: ex: "sg-062f05b98b1edfefaeasdadaedaed"
     * `NODE_GROUP_AUTOSCALING_POLICY_ARN`: ex: "arn:aws:iam::23428842523567:policy/NameOFTHEPOLICY"
     * `EKS_CLUSTER_NAME`: ex: "example-cluster"
-    * `VPC_CIDR_BLOCK`: ex: "10.1.0.0/16"
+    * `VPC_CIDR_BLOCK`: ex: ["10.1.0.0/16"]
     * `VPC_ID`: ex: "vpc-232fsr9fs9229frf"
-    * `VPC_PRIVATE_SUBNETS`: ex: "subnet-22938423489239"
+    * `VPC_PRIVATE_SUBNETS`: ex: ["subnet-22938423489239","subnet-232495956956"]
 
 ## How to Deploy
 
