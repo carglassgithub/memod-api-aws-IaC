@@ -83,3 +83,4 @@ resource "helm_release" "cluster-autoscaler" {
     name  = "autoDiscovery.enabled"
     value = "true"
   }
+}
