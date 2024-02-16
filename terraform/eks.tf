@@ -26,7 +26,7 @@ module "eks" {
     general = {
       min_size     = 2
       max_size     = 10
-      desired_size = 3
+      desired_size = 2
 
       instance_types       = ["${var.eks_cluster_ec2_instance_type}"]
       capacity_type        = "ON_DEMAND"
@@ -38,10 +38,48 @@ module "eks" {
       ]
 
       labels = {
-        role = "general"
+        role = local.nodegroup_label
+      }
+
+      tags = {
+        "k8s.io/cluster-autoscaler/enabled"                  = "true"
+        "k8s.io/cluster-autoscaler/${local.name}"            = "owned"
+        "k8s.io/cluster-autoscaler/node-template/label/role" = "${local.nodegroup_label}"
       }
 
       create_security_group = false
     }
   }
 }
+
+resource "aws_autoscaling_group_tag" "nodegroup1" {
+  for_each               = local.eks_asg_tag_list_nodegroup
+  autoscaling_group_name = element(module.eks.eks_managed_node_groups_autoscaling_group_names, 0)
+
+  tag {
+    key                 = each.key
+    value               = each.value
+    propagate_at_launch = true
+  }
+}
+
+resource "helm_release" "cluster-autoscaler" {
+  name             = "cluster-autoscaler"
+  namespace        = local.k8s_service_account_namespace
+  repository       = "https://kubernetes.github.io/autoscaler"
+  chart            = "cluster-autoscaler"
+  version          = "9.10.7"
+  create_namespace = false
+
+  set {
+    name  = "awsRegion"
+    value = local.aws_region
+  }
+  set {
+    name  = "autoDiscovery.clusterName"
+    value = local.name
+  }
+  set {
+    name  = "autoDiscovery.enabled"
+    value = "true"
+  }
