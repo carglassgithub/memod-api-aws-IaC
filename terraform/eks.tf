@@ -77,7 +77,7 @@ resource "helm_release" "cluster-autoscaler" {
   }
   set {
     name  = "autoDiscovery.clusterName"
-    value = local.name
+    value = "${terraform.workspace}-${var.eks_cluster_name}"
   }
   set {
     name  = "autoDiscovery.enabled"

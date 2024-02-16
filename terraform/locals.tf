@@ -1,7 +1,6 @@
 locals {
   _aws_env_s3_bucket_prefix_key = terraform.workspace
   aws_region                    = "us-east-1"
-  name             = "eks-cas"
   nodegroup_label = "general"
   eks_asg_tag_list_nodegroup = {
     "k8s.io/cluster-autoscaler/enabled" : true
