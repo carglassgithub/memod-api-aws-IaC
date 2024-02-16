@@ -39,12 +39,6 @@ provider "aws" {
   }
 }
 
- provider "kubectl" {
-  kubernetes {
-    config_path = "~/.kube/config"
-  }
-}
-
 resource "aws_security_group_rule" "allow_db_in" {
   description       = "Database Inbound Rule"
   type              = "ingress"
