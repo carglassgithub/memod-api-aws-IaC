@@ -52,7 +52,7 @@ module "eks" {
   }
 }
 
-resource "aws_autoscaling_group_tag" "nodegroup" {
+resource "aws_autoscaling_group_tag" "nodegroup1" {
   for_each               = local.eks_asg_tag_list_nodegroup
   autoscaling_group_name = element(module.eks.eks_managed_node_groups_autoscaling_group_names, 0)
 
