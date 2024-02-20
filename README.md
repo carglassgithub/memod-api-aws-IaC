@@ -39,3 +39,21 @@ Instead of using a `.tfvars` for storing the different variable values, Github e
 ## How to Deploy
 
 To deploy a new cluster with the given values just go to the `Actions` section of you repository and click on the `Deploy/update infrastructure`. There, go the `Run workflow` button and choose the environment you wish to deploy. The deployment will begin. It should take about 10 minutes for the cluster to be deployed on AWS EKS.
+
+
+## Installing the cluster autoscaler
+
+For now the installation must be done after the cluster is created via helm using the following commands:
+
+Add the repo:
+```sh
+helm repo add autoscaler https://kubernetes.github.io/autoscaler
+```
+
+Install the chart on the cluster:
+
+```sh
+helm install my-release autoscaler/cluster-autoscaler \
+    --set autoDiscovery.clusterName=<CLUSTER NAME> \
+    --set awsRegion=<YOUR AWS REGION>
+```
